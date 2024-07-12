@@ -1,9 +1,13 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
         @csrf
-
-        <!-- Name -->
         <div>
+            <x-input-label for="avatar" :value="__('avatar')" />
+            <x-text-input id="avatar" class="block mt-1 w-full" type="file" name="avatar" :value="old('avatar')" required  />
+            <x-input-error :messages="$errors->get('avatar')" class="mt-2" />
+        </div>
+        <!-- Name -->
+        <div class="mt-4">
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
@@ -14,6 +18,26 @@
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
+        <div class="mt-4">
+            <x-input-label for="occupation" :value="__('occupation')" />
+            <x-text-input id="occupation" class="border py-2 block mt-1 w-full" type="text" name="occupation" :value="old('occupation')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('occupation')" class="mt-2" />
+        </div>
+        <div class="mt-4">
+            <x-input-label for="bank_name" :value="__('bank_name')" />
+            <x-text-input id="bank_name" class="border py-2 block mt-1 w-full" type="text" name="bank_name" :value="old('bank_name')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('bank_name')" class="mt-2" />
+        </div>
+        <div class="mt-4">
+            <x-input-label for="bank_account" :value="__('bank_account')" />
+            <x-text-input id="bank_account" class="border py-2 block mt-1 w-full" type="text" name="bank_account" :value="old('bank_account')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('bank_account')" class="mt-2" />
+        </div>
+        <div class="mt-4">
+            <x-input-label for="bank_account_number" :value="__('bank_account_number')" />
+            <x-text-input id="bank_account_number" class="border py-2 block mt-1 w-full" type="number" name="bank_account_number" :value="old('bank_account_number')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('bank_account_number')" class="mt-2" />
         </div>
 
         <!-- Password -->
