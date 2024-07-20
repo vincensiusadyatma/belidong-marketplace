@@ -74,4 +74,18 @@ class ProductController extends Controller
         }
         dd($validated);
     }
+
+    public function destroy(Product $product){
+        dd($product);
+        try {
+            $product->delete();
+            return redirect()->route('admin.products.index')->with('success','Product deleted sucessfully');
+        } catch (\Exception $e) {
+            $error = ValidationException::withMessages([
+                'system_error' => ['System Error!'. $e->getMessage()],
+              
+            ]);
+    
+        }
+    }
 }

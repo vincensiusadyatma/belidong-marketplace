@@ -8,7 +8,13 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex flex-col gap-y-5 p-10">
-                
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                        <li class="text-white bg-red-500 py-5">{{ $error }}</li>
+                    @endforeach
+                </div>
+            @endif
             <a href="{{ route('admin.products.create') }}" class="w-fit py-5 px-3 bg-indigo-500 text-white">Add new product</a>
               @foreach ($products as $product)
                 <div class="item-product flex flex-row justify-between">
@@ -23,7 +29,12 @@
                     </div>
                     <div class="flex flex-row gap-x-3">
                         <a href="" class="py-5 px-3 bg-indigo-500 text-white">Edit</a>
-                        <a href="" class="py-5 px-3 bg-red-500 text-white">Delete</a>
+                        <form action="{{ route('admin.products.destroy',$product) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="py-5 px-3 bg-red-500 text-white">Delete</button>
+                        </form>
+                    
                     </div>
                 </div>
                 @empty($products)
