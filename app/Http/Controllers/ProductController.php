@@ -76,7 +76,7 @@ class ProductController extends Controller
     }
 
     public function destroy(Product $product){
-        dd($product);
+      
         try {
             $product->delete();
             return redirect()->route('admin.products.index')->with('success','Product deleted sucessfully');
@@ -87,5 +87,56 @@ class ProductController extends Controller
             ]);
     
         }
+    }
+
+    public function update(Request $request, Product $product){
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'cover' => ['sometimes','image', 'mimes:png,jpg,jpeg'],
+            'path_file' => ['sometimes','file', 'mimes:zip'],
+            'about' => ['required', 'string', 'max:2555555'],
+            'category_id' => ['required', 'string'],
+            'price' => ['required', 'string','min:0'],
+        ]);
+
+        DB::beginTransaction();
+        try {
+        
+            if ($request->hasFile('cover')) {
+                $cover_path = $request->file('cover')->store('product_covers', 'public');
+                $validated['cover'] = $cover_path;
+            }
+            
+            if ($request->hasFile('file_path')) {
+                $file_path = $request->file('file_path')->store('product_files', 'public');
+                $validated['file_path'] = $file_path;
+            }
+            
+
+            $validated['slug'] =  Str::slug($request->name);
+            $validated['creator_id'] = Auth::id();
+
+            $product->update($validated);
+            DB::commit();
+
+            return redirect()->route('admin.products.index')->with('success','Product created sucessfully');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            $error = ValidationException::withMessages([
+                'system_error' => ['System Error!'. $e->getMessage()],
+              
+            ]);
+    
+        }
+        dd($validated);
+    }
+    public function edit(Product $product){
+        $categories = Category::all();
+        return view('admin.products.edit',[
+            'product' => $product,
+            'categories' => $categories
+        ]);
     }
 }

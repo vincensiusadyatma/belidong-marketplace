@@ -28,7 +28,7 @@
                         <p>Rp.{{ $product->price }}</p>
                     </div>
                     <div class="flex flex-row gap-x-3">
-                        <a href="" class="py-5 px-3 bg-indigo-500 text-white">Edit</a>
+                        <a href="{{ route('admin.products.edit',$product) }}" class="py-5 px-3 bg-indigo-500 text-white">Edit</a>
                         <form action="{{ route('admin.products.destroy',$product) }}" method="POST">
                             @csrf
                             @method('DELETE')
