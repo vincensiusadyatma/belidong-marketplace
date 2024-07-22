@@ -91,12 +91,12 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product){
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['sometimes', 'string', 'max:255'],
             'cover' => ['sometimes','image', 'mimes:png,jpg,jpeg'],
             'path_file' => ['sometimes','file', 'mimes:zip'],
-            'about' => ['required', 'string', 'max:2555555'],
-            'category_id' => ['required', 'string'],
-            'price' => ['required', 'string','min:0'],
+            'about' => ['sometimes', 'string', 'max:2555555'],
+            'category_id' => ['sometimes', 'string'],
+            'price' => ['sometimes', 'string','min:0'],
         ]);
 
         DB::beginTransaction();
