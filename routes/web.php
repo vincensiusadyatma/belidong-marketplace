@@ -32,6 +32,9 @@ Route::middleware('auth')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function(){
         Route::resource('products', ProductController::class);
         Route::resource('product_orders', ProductOrderController::class);
+
+        Route::get('/transactions',[ProductOrderController::class,'transactions'])->name("product_orders.transactions");
+        Route::get('/transactions/detail/{productOrder}',[ProductOrderController::class,'transactions_details'])->name("product_orders.transactions.details");
     });
     
 });
