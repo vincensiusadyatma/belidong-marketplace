@@ -24,7 +24,16 @@
                             <p>{{ $transaction->product->category->name }}</p>
                         </div>
                         <div>
-                            <p>Rp.{{ $transaction->price }}</p>
+                            <p>Rp.{{ $transaction->total_price }}</p>
+                            @if ($order->is_paid)
+                            <span class="py-2 px-5 rounded-full bg-orange-500 text-white">
+                                Paid
+                            </span>
+                        @else
+                            <span class="py-2 px-5 rounded-full bg-orange-500 text-white">
+                                Pending
+                            </span>
+                        @endif
                         </div>
                         <div>
                             <p>{{ $transaction->is_paid ? 'Paid' : 'Unpaid' }}</p>

@@ -25,7 +25,17 @@
                             <p>{{ $order->product->creator->name }}</p>
                         </div>
                         <div>
-                            <p>Rp.{{ $order->price }}</p>
+                            <p class="mb-2">Rp.{{ $order->total_price }}</p>
+                            @if ($order->is_paid)
+                                <span class="py-2 px-5 rounded-full bg-orange-500 text-white">
+                                    Paid
+                                </span>
+                            @else
+                                <span class="py-2 px-5 rounded-full bg-orange-500 text-white">
+                                    Pending
+                                </span>
+                            @endif
+                           
                         </div>
                         <div class="flex flex-row gap-x-3">
                             <a href="{{ route('admin.products_orders.show', $order) }}" class="py-5 px-3 bg-indigo-500 text-white">

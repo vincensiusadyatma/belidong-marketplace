@@ -29,4 +29,17 @@ class ProductOrderController extends Controller
     public function transactions_details(ProductOrder $productOrder){
       dd($productOrder);
     }
+
+    public function show(ProductOrder $productOrder){
+        $products = Product::where('creator_id', Auth::id())->get();
+        
+        return view('admin.products.index',[
+            'products' => $products
+        ]);
+    }
+
+    public function update(Request $request, ProductOrder $productOrder){
+        $productOrder->update(['is_paid' => true]);
+        return redirect()->back()->with('message','Order success updated');
+    }
 }
